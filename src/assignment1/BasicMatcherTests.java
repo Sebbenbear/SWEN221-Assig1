@@ -275,4 +275,60 @@ public class BasicMatcherTests extends BasicMatcher {
 	@Test public void test_50() {
 		assertEquals(false, match("a", "^.."));
 	}
+
+	// =============================================================
+	// Regex: "+b"; inputs which do match. + matches one or more occurrences of the preceeding char
+	// =============================================================
+
+	@Test public void test_51() {
+		assertEquals(true, match("davebc", "bc+"));
+	}
+
+	@Test public void test_52() {
+		assertEquals(true, match("dbccaa", "bc+"));
+	}
+
+	@Test public void test_53() {
+		assertEquals(true, match("bc", "bc+"));
+	}
+
+	@Test public void test_54() {
+		assertEquals(true, match("bcccc", "bc+"));
+	}
+
+	@Test public void test_55() {
+		assertEquals(true, match("cccc", "c+"));
+	}
+
+	@Test public void test_56() {
+		assertEquals(true, match("c", "c+"));
+	}
+
+	// =============================================================
+	// Regex: "+b"; inputs which don't match
+	// =============================================================
+
+	@Test public void test_57() {
+		assertEquals(false, match("daveb", "bc+"));
+	}
+
+	@Test public void test_58() {
+		assertEquals(false, match("b", "bc+"));
+	}
+
+	@Test public void test_59() {
+		assertEquals(false, match("bac", "bc+"));
+	}
+
+	@Test public void test_60() {
+		assertEquals(false, match("cc", "bc+"));
+	}
+
+	@Test public void test_61() {
+		assertEquals(false, match("ccb", "bc+"));
+	}
+
+	@Test public void test_62() {
+		assertEquals(false, match("", "c+"));
+	}
 }

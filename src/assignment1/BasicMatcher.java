@@ -75,7 +75,7 @@ public class BasicMatcher implements Matcher {
 	 */
 	protected boolean matchHere(String text, String regex) {
 
-		System.err.println("pre: " + text + " " + regex);
+		//System.err.println("pre: " + text + " " + regex);
 
 		if (regex.length() == 0) {
 			return true;
@@ -112,6 +112,15 @@ public class BasicMatcher implements Matcher {
 			System.err.println(text + " " + regex);
 			return matchStar(text, regex);
 		}
+
+		//check for the plus symbol
+		if (regex.length() > 1 && regex.charAt(1) == '+') {
+			System.err.println("Plus" + text + " " + regex);
+			if(text.length() > 0 && text.charAt(0) == regex.charAt(0)){
+				return matchStar(text, regex);
+			}
+		}
+
 		//recursively match the whole text with the regex, one char at a time
 		if (matchChar(text, regex)) {
 			return matchHere(text.substring(1), regex.substring(1));
