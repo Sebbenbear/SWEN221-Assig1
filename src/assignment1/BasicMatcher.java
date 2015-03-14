@@ -40,7 +40,7 @@ public class BasicMatcher implements Matcher {
 
 		//loop through the text attempting to match,
 		// quit at the first success or the end of the text
-		do {										//do this at least once
+		do {
 			if (matchHere(text, regex)) {
 				return true;
 			}
@@ -75,17 +75,14 @@ public class BasicMatcher implements Matcher {
 	 */
 	protected boolean matchHere(String text, String regex) {
 
-		//System.err.println("pre: " + text + " " + regex);
-
 		if (regex.length() == 0) {
 			return true;
 		}
-		if (regex.charAt(0) == '^') {  //* works, solves more tests
+		if (regex.charAt(0) == '^') {
 			if(regex.length() > 2 && regex.charAt(2) == '*'){
 				return matchStar(text, regex.substring(1));
 			}
 			if(text.length() == 0) {
-				System.err.println("asljdn");
 				return false;
 			}
 
@@ -106,30 +103,17 @@ public class BasicMatcher implements Matcher {
 
 			return text.length() == 0;
 		}
-		// check for a starred pattern in the regex
-
 		if (regex.length() > 1 && regex.charAt(1) == '*') {
-			System.err.println(text + " " + regex);
 			return matchStar(text, regex);
 		}
-
-		//check for the plus symbol
 		if (regex.length() > 1 && regex.charAt(1) == '+') {
-			System.err.println("Plus" + text + " " + regex);
 			if(text.length() > 0 && text.charAt(0) == regex.charAt(0)){
 				return matchStar(text, regex);
 			}
 		}
-
-		//recursively match the whole text with the regex, one char at a time
 		if (matchChar(text, regex)) {
 			return matchHere(text.substring(1), regex.substring(1));
 		}
-
-		//if(text.length() > 1){
-		//	return matchHere(text.substring(1), regex);  //13, 14
-		//}
-
 		return false;
 	}
 
@@ -151,7 +135,6 @@ public class BasicMatcher implements Matcher {
 
 		String restOfRegex = regex.substring(2); //take away both char and star
 
-		System.out.println(restOfRegex);
 		// we cannot use a do...while loop (although it would be nicer), why not?
 		if (matchHere(text, restOfRegex)) {
 			return true;
